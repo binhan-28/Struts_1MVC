@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="radio"  id="radioList" value="line" name="fav_language"/>
+        <label>line</label>
+        <br />
+        <input type="radio"  id="radioList" value="circle" name="fav_language"/>
+        <label>circle</label>
+        <br />
+        <input type="radio"  id="radioList" value="rectangle" name="fav_language"/>
+        <label>rectangle</label>
+    </div>
+    <div id="div-line" style="display: none">
+        <button type="button" id="button" value="btnLine">line</button>
+    </div>
+    <div id="div-circle" style="display: none">
+        <button type="button" id="button" value="btnCircle">circle</button>
+        <br />
+    </div>
+    <div id="div-rectangle" style="display: none">
+        <button type="button" id="button" value="btnRectangle">rectangle</button>
+        <br />
+    </div>
+    <div class="color">
+        <input type="color" id="input-color" oninput="changeColor()"/>
+    </div>
+    <div class="color">
+        <p id="text"></p>
+    </div>
+    <div id="canvas" style="display: none">
+        <canvas id="myCanvas" width="300" height="200"></canvas>
+    </div>
+    <div id="canvas1" style="display: none">
+        <canvas id="myCanvas1" width="300" height="200"></canvas>
+    </div>
+    <div id="canvas2" style="display: none">
+        <canvas id="myCanvas2" width="300" height="200"></canvas>
+    </div>
+</body>
+<script>
+    var canvas_line = document.getElementById("myCanvas");
+    var context_line = canvas_line.getContext("2d");
+    
+    var canvas_circle= document.getElementById("myCanvas1");
+    var context_circl = canvas_circle.getContext("2d");
+
+    var canvas_rect = document.getElementById("myCanvas2");
+    var context_rect = canvas_rect.getContext("2d");
+
+    var div_line = document.getElementById('div-line');
+    var div_circle = document.getElementById('div-circle');
+    var div_rectangle = document.getElementById('div-rectangle');
+
+    var canvas = document.getElementById('canvas');
+    var canvas1 = document.getElementById('canvas1');
+    var canvas2 = document.getElementById('canvas2');
+    
+
+    var radioList = document.querySelectorAll('#radioList');    
+    var btnList = document.querySelectorAll('#button'); 
+
+    var text_p = document.getElementById('text');
+    var color  = document.getElementById('input-color');
+
+    var btnValue;   
+    var radioValue;
+    radioList.forEach(radio=>{
+        radio.addEventListener('change', function checkRadio(){            
+            radioValue = radio.value;
+            changeRadio(radioValue);
+            console.log('radio:' + changeRadio(radioValue))
+            console.log('test:' + changeRadio(radioValue))
+        })
+    });
+    function changeRadio(radioValue){
+        let radioChecked = 0;
+        if(radioValue == 'line'){
+            div_line.style.display = 'flex';
+            div_circle.style.display = 'none';
+            div_rectangle.style.display = 'none';
+            canvas.style.display = 'flex';
+            canvas1.style.display = 'none';
+            canvas2.style.display = 'none';
+            radioChecked = 1
+        }
+        if(radioValue == 'circle'){
+            div_line.style.display = 'none';
+            div_circle.style.display = 'flex';
+            div_rectangle.style.display = 'none';
+            canvas.style.display = 'none';
+            canvas1.style.display = 'flex';
+            canvas2.style.display = 'none';
+            radioChecked = 1;
+        }
+        if(radioValue == 'rectangle'){
+            div_line.style.display = 'none';
+            div_circle.style.display = 'none';
+            div_rectangle.style.display = 'flex';
+            canvas.style.display = 'none';
+            canvas1.style.display = 'none';
+            canvas2.style.display = 'flex';
+            radioChecked = 1;
+        }
+        // return getValue();
+getValue();
+        function getValue(){
+            var tempt;
+            if(radioChecked == 1){
+                tempt=true;
+            }
+            return tempt;
+        }
+
+        return test()
+        
+        function test(){
+            let a = radioChecked;
+            let b = changeBtn(btnValue);
+            if(radioChecked == 1 && b != ""){
+                return true
+            } else{
+                return false
+            }
+        }
+changeColor();
+        
+    }
+    btnList.forEach(btn=>{
+        btn.addEventListener('click', function checkBtn(){            
+            btnValue = btn.value;
+            changeBtn(btnValue);
+            console.log('btn:' + changeBtn(btnValue))
+        })
+    });
+    function changeBtn(btnValue){
+        let btnChecked = 0;
+        let tempbtn;
+        if(btnValue == 'btnLine'){
+            text_p.innerHTML = "line";
+           
+            context_line.moveTo(50, 150);
+            context_line.lineTo(250, 50);
+            context_line.strokeStyle = color.value;
+            context_line.stroke();
+            btnChecked = 1;
+        }
+        if(btnValue == 'btnCircle'){
+            text_p.innerHTML = "circle";
+
+            context_circl.arc(150, 100, 70, 0, 2 * Math.PI, false);
+            context_circl.strokeStyle = color.value;
+            context_circl.stroke();
+            btnChecked = 1;
+        }
+        if(btnValue == 'btnRectangle'){
+  
+            text_p.innerHTML = "rectangle";
+            context_rect.rect(50, 50, 200, 100); 
+            context_rect.strokeStyle = color.value;
+            context_rect.stroke();
+            btnChecked = 1;
+        }
+        return getValueBtn();
+
+        function getValueBtn(){
+            if(btnChecked == 1){
+                tempbtn = 'button to checked';
+            }            
+            return tempbtn;
+        }
+    }
+    function changeColor(){
+        text_p.style.color = color.value;
+        context_rect.strokeStyle = color.value;
+        context_rect.stroke();
+        context_circl.strokeStyle = color.value;
+        context_circl.stroke();
+
+        context_line.strokeStyle = color.value;
+        context_line.stroke();
+        }
+
+</script>
+</html>
